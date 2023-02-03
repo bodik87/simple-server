@@ -23,9 +23,10 @@ app.patch("/server/update", updateNote);
 async function start() {
   try {
     mongoose.connect(
-      `mongodb+srv://admin:admin123@cluster0.k6ppzhv.mongodb.net/simple?retryWrites=true&w=majority`
+      process.env.MONGODB ||
+        "mongodb+srv://admin:admin123@cluster0.k6ppzhv.mongodb.net/simple?retryWrites=true&w=majority"
     );
-    app.listen(5005, () => console.log(`Сервер работает!`));
+    app.listen(process.env.PORT || 5005, () => console.log(`Сервер работает!`));
   } catch (e) {
     console.log(e);
   }
