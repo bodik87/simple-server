@@ -2,8 +2,8 @@ import NoteModel from "./NoteModel.js";
 
 export const createNote = async (request, response) => {
   try {
-    const { text } = request.body;
-    const note = new NoteModel({ text });
+    const { title, text } = request.body;
+    const note = new NoteModel({ text, title });
     await note.save();
     response.json(note);
   } catch (error) {
@@ -51,8 +51,9 @@ export const deleteNote = async (request, response) => {
 
 export const updateNote = async (request, response) => {
   try {
-    const { text, id } = request.body;
+    const { title, text, id } = request.body;
     const note = await NoteModel.findById(id);
+    note.title = title;
     note.text = text;
     await note.save();
     response.json(note);
